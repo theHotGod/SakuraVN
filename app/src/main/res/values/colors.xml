@@ -5,4 +5,6 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorSecondary">#03DAC5</color>
+    <color name="pink">#B56576</color>
+    <color name="blue">#355070</color>
 </resources>
