@@ -7,4 +7,6 @@
     <color name="colorSecondary">#03DAC5</color>
     <color name="pink">#B56576</color>
     <color name="blue">#355070</color>
+    <color name="orange">#EAAC8B</color>
+    <color name="orangeTransparent">#CCEAAC8B</color>
 </resources>
