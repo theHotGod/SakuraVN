@@ -77,7 +77,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel."
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel."
                 android:textColor="@color/white"
                 android:textSize="13dp" />
 
