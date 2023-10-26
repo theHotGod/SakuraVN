@@ -3,4 +3,6 @@
     <string name="app_title">Whispers of the Sakura</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="register">Register Here!</string>
+    <string name="account">Already have an account?</string>
+    <string name="login">Login Here!</string>
 </resources>

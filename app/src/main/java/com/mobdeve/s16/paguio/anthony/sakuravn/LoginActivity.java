@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
         tvRegister = findViewById(R.id.tvRegister);
         userInput = findViewById(R.id.userInput);
-        userPassword = findViewById(R.id.userPassword);
+        userPassword = findViewById(R.id.userPass);
         loginBtn = findViewById(R.id.loginBtn);
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // TODO: create function for login button
     public void login(View v) {
+        Intent intent = new Intent(this, ChoosePlayerActivity.class);
+        startActivity(intent);
 
     }
 
