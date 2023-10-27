@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/rooftop_garden"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/sakuraLogo"
+        android:layout_width="235dp"
+        android:layout_height="216dp"
+        app:srcCompat="@drawable/sakura" />
+
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/app_title"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold|italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/DP"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/input_box"
+            android:clipToOutline="true"
+            app:srcCompat="@drawable/femc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/uName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_box"
+                android:padding="3dp"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:text="Username"/>
+
+            <TextView
+                android:id="@+id/UID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/input_box"
+                android:padding="3dp"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:text="UID"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/newGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/input_box"
+            android:padding="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:text="New Game"/>
+
+        <TextView
+            android:id="@+id/contGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_box"
+            android:padding="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:text="Continue Game"/>
+
+        <TextView
+            android:id="@+id/settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_box"
+            android:padding="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:text="Settings"/>
+
+        <TextView
+            android:id="@+id/exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_box"
+            android:padding="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:text="Exit Game"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
