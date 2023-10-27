@@ -56,51 +56,59 @@
 
     <RelativeLayout
         android:id="@+id/dialogue"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:paddingBottom="100dp"
         android:gravity="bottom">
 
-        <LinearLayout
-            android:id="@+id/txtBox"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialogue_box"
-            android:orientation="vertical">
+            android:layout_below="@+id/optionBox"
+            android:layout_marginTop="80dp">
 
-            <TextView
-                android:id="@+id/speakerTxt"
+            <LinearLayout
+                android:id="@+id/txtBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:text="Speaker"
-                android:textColor="@color/blue"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:background="@drawable/dialogue_box"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/contentTxt"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/speakerTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Speaker"
+                    android:textColor="@color/blue"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contentTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="130dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel."
+                    android:textColor="@color/black"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/MC"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="130dp"
-                android:layout_marginBottom="10dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel."
-                android:textColor="@color/black"
-                android:textSize="13dp" />
+                android:layout_alignRight="@+id/txtBox"
+                android:layout_alignBottom="@+id/txtBox"
+                app:srcCompat="@drawable/femc" />
 
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/MC"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/txtBox"
-            app:srcCompat="@drawable/femc" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
