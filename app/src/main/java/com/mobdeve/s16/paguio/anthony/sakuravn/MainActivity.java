@@ -2,6 +2,8 @@ package com.mobdeve.s16.paguio.anthony.sakuravn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,8 +75,13 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.setOnClickListener(v -> {
             // temporary set to HomeActivity once dialogue is finished.
             if (dialogue.size() == 0) {
-                Intent intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
+                txtBox.setVisibility(v.INVISIBLE);
+                mcImage.setVisibility(v.INVISIBLE);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                NoTalkingFragment noTalkingFragment = new NoTalkingFragment();
+                fragmentTransaction.replace(R.id.dialogue, noTalkingFragment);
+                fragmentTransaction.commit();
             }
             else {
                 tvContent.setText(dialogue.get(0));

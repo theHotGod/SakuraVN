@@ -4,55 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/rooftop_tree">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="80sp">
-
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_marginLeft="20sp"
-            android:background="@drawable/bordered_circle_button"
-            app:srcCompat="?attr/homeAsUpIndicator" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginRight="20sp"
-            android:gravity="right">
-
-            <ImageButton
-                android:id="@+id/dialogueBtn"
-                android:layout_width="50sp"
-                android:layout_height="50sp"
-                android:background="@drawable/bordered_circle_button"
-                app:srcCompat="?android:attr/actionModeFindDrawable" />
-
-            <ImageButton
-                android:id="@+id/fastBtn"
-                android:layout_width="50sp"
-                android:layout_height="50sp"
-                android:layout_marginLeft="5sp"
-                android:background="@drawable/bordered_circle_button"
-                app:srcCompat="@android:drawable/ic_media_ff" />
-
-            <ImageButton
-                android:id="@+id/autoBtn"
-                android:layout_width="50sp"
-                android:layout_height="50sp"
-                android:layout_marginLeft="5sp"
-                android:background="@drawable/bordered_circle_button"
-                app:srcCompat="@android:drawable/ic_menu_slideshow" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    >
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -75,7 +27,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:gravity="bottom"
-            android:paddingBottom="100dp">
+            >
 
             <LinearLayout
                 android:id="@+id/txtBox"
