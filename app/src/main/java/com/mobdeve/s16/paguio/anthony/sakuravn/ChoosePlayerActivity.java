@@ -39,6 +39,11 @@ public class ChoosePlayerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // enable the confirm button
                 confirmBtn.setEnabled(true);
+                // change maleMC drawable to indicate chosen character
+                maleMC.setImageResource(R.drawable.chosen_malemc);
+
+                // revert femaleMC drawable to indicate unchosen character
+                femaleMC.setImageResource(R.drawable.not_chosen_femc);
                 // show a toast message to indicate chosen character
                 Toast.makeText(ChoosePlayerActivity.this, "You have chosen MaleMC", Toast.LENGTH_SHORT).show();
             }
@@ -48,6 +53,11 @@ public class ChoosePlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 confirmBtn.setEnabled(true);
+                // change femaleMC drawable to indicate chosen character
+                femaleMC.setImageResource(R.drawable.chosen_femc);
+
+                // revert maleMC drawable to indicate unchosen character
+                maleMC.setImageResource(R.drawable.not_chosen_malemc);
                 // show a toast message to indicate chosen character
                 Toast.makeText(ChoosePlayerActivity.this, "You have chosen FeMC", Toast.LENGTH_SHORT).show();
             }
@@ -60,6 +70,10 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 maleMC.setEnabled(true);
                 femaleMC.setEnabled(true);
                 confirmBtn.setEnabled(false);
+
+                // change both MCs drawable to indicate unchosen character
+                maleMC.setImageResource(R.drawable.not_chosen_malemc);
+                femaleMC.setImageResource(R.drawable.not_chosen_femc);
             }
         });
 
