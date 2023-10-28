@@ -2,6 +2,7 @@ package com.mobdeve.s16.paguio.anthony.sakuravn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ public class ChoosePlayerActivity extends AppCompatActivity {
     ImageView femaleMC;
     Button confirmBtn;
     Button clearBtn;
+    boolean isMaleMCChosen = false;
+    boolean isFemaleMCChosen = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +30,6 @@ public class ChoosePlayerActivity extends AppCompatActivity {
 
         confirmBtn.setEnabled(false);
 
-        // set the onClickListeners
-        // q: what is a good approach to have the player choose only one character from the ImageView?
-        // a: use the setOnClickListener() method of the ImageView class
-        // q: will i have one setOnClickListener for each or one for both?
-        // a: one for both
-
-        // setOnClickListener() function
         maleMC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +42,8 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 femaleMC.setImageResource(R.drawable.not_chosen_femc);
                 // show a toast message to indicate chosen character
                 Toast.makeText(ChoosePlayerActivity.this, "You have chosen MaleMC", Toast.LENGTH_SHORT).show();
+                isMaleMCChosen = true;
+
             }
         });
 
@@ -60,6 +58,7 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 maleMC.setImageResource(R.drawable.not_chosen_malemc);
                 // show a toast message to indicate chosen character
                 Toast.makeText(ChoosePlayerActivity.this, "You have chosen FeMC", Toast.LENGTH_SHORT).show();
+                isFemaleMCChosen = true;
             }
         });
         // q: what if i want the toast to appear if the user tries to pick another character?
@@ -74,6 +73,34 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 // change both MCs drawable to indicate unchosen character
                 maleMC.setImageResource(R.drawable.not_chosen_malemc);
                 femaleMC.setImageResource(R.drawable.not_chosen_femc);
+                isFemaleMCChosen = false;
+                isMaleMCChosen = false;
+            }
+        });
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFemaleMCChosen == true) {
+                    // pass a value that will indicate that the user has chosen FeMC
+                    // q: how to pass a value to the next activity?
+                    // a: use intent.putExtra()
+                    // q: what value is most appropriate for me to do this?
+                    // a: use a boolean value
+                    Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
+                    intent.putExtra("isFemaleMCChosen", isFemaleMCChosen);
+                    startActivity(intent);
+                    finish();
+
+
+                } else if (isMaleMCChosen == true) {
+                    Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
+                    intent.putExtra("isMaleMCChosen", isMaleMCChosen);
+                    startActivity(intent);
+                    finish();
+
+
+                }
             }
         });
 

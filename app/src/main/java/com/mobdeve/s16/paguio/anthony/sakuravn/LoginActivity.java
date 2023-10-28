@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v) {
         Intent intent = new Intent(this, ChoosePlayerActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void register(View v) {
@@ -62,11 +63,5 @@ public class LoginActivity extends AppCompatActivity {
     // a: 6. achievements
     // a: 7. gallery
 
-    // q: can i make a textView clickable like a button?
-    // a: yes, use android:clickable="true" and android:onClick="methodName"
-
-    // q: how to make textView bold?
-    // a: use <b> </b> tags
-    // a: or use android:textStyle="bold"
 
 }
