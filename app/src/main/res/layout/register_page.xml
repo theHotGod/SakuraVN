@@ -35,7 +35,7 @@
         android:textColor="@color/blue"
         android:textColorHint="@color/gray"
         android:ems="15"
-        android:hint="Email"
+        android:hint="Username"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/input_box"
+        android:ems="15"
+        android:hint="Email"
         android:padding="10dp"
         android:textColor="@color/blue"
-        android:textColorHint="@color/gray"
-        android:ems="15"
-        android:hint="Username" />
+        android:textColorHint="@color/gray" />
 
     <EditText
         android:id="@+id/userPassword"
