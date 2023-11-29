@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.mobdeve.s16.paguio.anthony.sakuravn.models.PlayerMC;
+
 public class ChoosePlayerActivity extends AppCompatActivity {
 
     ImageView maleMC;
@@ -17,6 +19,7 @@ public class ChoosePlayerActivity extends AppCompatActivity {
     Button clearBtn;
     boolean isMaleMCChosen = false;
     boolean isFemaleMCChosen = false;
+    PlayerMC playerMC;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,10 @@ public class ChoosePlayerActivity extends AppCompatActivity {
         clearBtn = (Button) findViewById(R.id.clearBtn);
 
         confirmBtn.setEnabled(false);
+
+
+        // store the data of the chosen character in playerMC, then will be stored in the database
+
 
         maleMC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +89,7 @@ public class ChoosePlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isFemaleMCChosen == true) {
-                    // pass a value that will indicate that the user has chosen FeMC
-                    // q: how to pass a value to the next activity?
-                    // a: use intent.putExtra()
-                    // q: what value is most appropriate for me to do this?
-                    // a: use a boolean value
+
                     Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
                     intent.putExtra("isFemaleMCChosen", isFemaleMCChosen);
                     startActivity(intent);

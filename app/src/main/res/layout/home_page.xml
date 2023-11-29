@@ -103,6 +103,7 @@
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textStyle="bold"
+            android:clickable="true"
             android:text="Continue Game"/>
 
         <TextView

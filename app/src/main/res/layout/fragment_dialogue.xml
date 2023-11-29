@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DialogueFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/optionBox"
+        android:layout_marginTop="450dp">
+
+        <LinearLayout
+            android:id="@+id/txtBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialogue_box"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/speakerTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Speaker"
+                android:textColor="@color/blue"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contentTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="130dp"
+                android:layout_marginBottom="10dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt libero leo, nec varius lorem pharetra vel."
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/MC"
+            app:srcCompat="@drawable/femc"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/txtBox"
+            android:layout_alignBottom="@+id/txtBox"
+            android:clickable="true" />
+
+    </RelativeLayout>
+
+</FrameLayout>

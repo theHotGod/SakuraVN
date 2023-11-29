@@ -12,10 +12,20 @@ import android.widget.TextView;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private TextView contGame;
+    GameThread gameThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
 
+        contGame = findViewById(R.id.contGame);
+        contGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }
