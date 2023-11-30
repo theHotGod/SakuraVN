@@ -55,27 +55,58 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-            UserAccount user = new UserAccount(input, email, password);
 
-            db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                        }
-                    });
+        // Check if password and confirm password are equal
+        if (!password.equals(confirm)) {
+            Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+            CollectionReference usersCollection = db.collection("users");
+            usersCollection.document(email).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        UserAccount user = new UserAccount(input, email, password);
+                        DocumentReference userRef = usersCollection.document(email);
+
+                        userRef.set(user)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + userRef.getId());
+                                    Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w(TAG, "Error adding document", e);
+                                    // Handle the failure, show a message, etc.
+                                });
+                    }
+                }
+            });
+//            UserAccount user = new UserAccount(input, email, password);
+//            DocumentReference userRef = db.collection("users").document(email);
+//
+//            userRef.set(user);
+//            db.collection("users")
+//                    .add(user)
+//                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                        @Override
+//                        public void onSuccess(DocumentReference documentReference) {
+//                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w(TAG, "Error adding document", e);
+//                        }
+//                    });
 
 
-            Intent intent = new Intent(this, ChoosePlayerActivity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(this, ChoosePlayerActivity.class);
+//            startActivity(intent);
+//            finish();
 
     }
 

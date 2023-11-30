@@ -33,9 +33,9 @@
         android:background="@drawable/input_box"
         android:padding="10dp"
         android:textColor="@color/blue"
-        android:textColorHint="@color/gray"
+        android:textColorHint="@color/white"
         android:ems="15"
-        android:hint="Email / Username"/>
+        android:hint="Email"/>
 
     <EditText
         android:id="@+id/userPass"
@@ -45,7 +45,7 @@
         android:background="@drawable/input_box"
         android:padding="10dp"
         android:textColor="@color/blue"
-        android:textColorHint="@color/gray"
+        android:textColorHint="@color/white"
         android:ems="15"
         android:hint="Password"
         android:inputType="textPassword" />
