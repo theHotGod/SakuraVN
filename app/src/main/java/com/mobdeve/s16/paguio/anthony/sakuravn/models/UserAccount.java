@@ -2,15 +2,9 @@ package com.mobdeve.s16.paguio.anthony.sakuravn.models;
 
 public class UserAccount {
     // Attributes
-    private String confirmPassword;
     private String email;
     private String username;
     private String password;
-    private Gender playerMC;
-
-    public enum Gender {
-        M, F
-    }
 
     public UserAccount() {
     }
@@ -19,22 +13,6 @@ public class UserAccount {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-    public Gender getPlayerMC() {
-        return playerMC;
-    }
-
-    public void setPlayerMC(Gender playerMC) {
-        this.playerMC = playerMC;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {

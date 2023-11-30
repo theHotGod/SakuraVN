@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "291996714228",
-    "project_id": "sakuravn-90df1",
-    "storage_bucket": "sakuravn-90df1.appspot.com"
+    "project_number": "392235308043",
+    "project_id": "sakuravn2-c0e9c",
+    "storage_bucket": "sakuravn2-c0e9c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:291996714228:android:559a71c104c59de409caa1",
+        "mobilesdk_app_id": "1:392235308043:android:6078f7c6861d104629e30e",
         "android_client_info": {
           "package_name": "com.mobdeve.s16.paguio.anthony.sakuravn"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAL-3uDtdP3vB7I-tl-wGGYCgNOxSInfYU"
+          "current_key": "AIzaSyDmOS4jYDL-EL83lR8intCmnjXxsrcvsf4"
         }
       ],
       "services": {
