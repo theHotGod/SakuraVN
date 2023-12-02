@@ -1,14 +1,20 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobdeve.s16.paguio.anthony.sakuravn.models.PlayerMC;
 
 public class ChoosePlayerActivity extends AppCompatActivity {
@@ -19,6 +25,7 @@ public class ChoosePlayerActivity extends AppCompatActivity {
     Button clearBtn;
     boolean isMaleMCChosen = false;
     boolean isFemaleMCChosen = false;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     PlayerMC playerMC;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,26 +95,38 @@ public class ChoosePlayerActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFemaleMCChosen == true) {
+                if (isFemaleMCChosen || isMaleMCChosen) {
+                    // Assuming you have the user's email from the registration process
+                    String userEmail = getIntent().getStringExtra("email");
 
-                    Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
-                    intent.putExtra("isFemaleMCChosen", isFemaleMCChosen);
-                    startActivity(intent);
-                    finish();
-
-
-                } else if (isMaleMCChosen == true) {
-                    Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
-                    intent.putExtra("isMaleMCChosen", isMaleMCChosen);
-                    startActivity(intent);
-                    finish();
-
-
+                    // Update the user's gender in Firestore based on the chosen character
+                    if (isFemaleMCChosen) {
+                        updateUserGender(userEmail, "female");
+                    } else if (isMaleMCChosen) {
+                        updateUserGender(userEmail, "male");
+                    }
                 }
             }
         });
 
 
     }
+    private void updateUserGender(String userEmail, String gender) {
+        CollectionReference usersCollection = db.collection("users");
+        DocumentReference userRef = usersCollection.document(userEmail);
 
+        userRef.update("gender", gender)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "User gender updated successfully");
+                    // Proceed to MainActivity or perform any other actions
+                    Intent intent = new Intent(ChoosePlayerActivity.this, HomeActivity.class);
+                    intent.putExtra("email", userEmail);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error updating user gender", e);
+                    // Handle the failure, show a message, etc.
+                });
+    }
 }

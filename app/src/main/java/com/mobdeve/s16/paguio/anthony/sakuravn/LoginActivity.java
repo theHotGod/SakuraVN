@@ -69,9 +69,20 @@ public class LoginActivity extends AppCompatActivity {
                     UserAccount user = task.getResult().toObject(UserAccount.class);
                     if (user != null && user.getPassword().equals(password)) {
                         // Password matches, login successful
-                        Intent intent = new Intent(LoginActivity.this, ChoosePlayerActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (user.getGender().equals("male") || user.getGender().equals("female")) {
+                            //If the user has picked a gender
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+                            finish();
+                        } else if (user.getGender().equals("none")) {
+                            //If the user closes during the gender selection
+                            Intent intent = new Intent (LoginActivity.this, ChoosePlayerActivity.class);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+                            finish();
+                        }
+
                     } else {
                         // Password does not match
                         Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();

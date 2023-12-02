@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -17,6 +20,8 @@ public class HomeActivity extends AppCompatActivity {
     private TextView contGame;
     private TextView newGame;
     GameThread gameThread;
+    public String email;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_page);
 
         contGame = findViewById(R.id.contGame);
+        CollectionReference usersCollection = db.collection("users");
+        Intent intent = new Intent();
+        email = intent.getStringExtra("email");
         contGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

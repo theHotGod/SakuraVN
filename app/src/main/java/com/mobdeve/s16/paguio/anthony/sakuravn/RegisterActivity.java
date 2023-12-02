@@ -49,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email = userPass.getText().toString();
         String password = userPassword.getText().toString();
         String confirm = confirmPassword.getText().toString();
+        int index = 0;
+        String gender = "none";
 
         // Just to validate user input so empty fields won't enter the DB
         if (input.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
@@ -67,13 +69,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.getResult().exists()) {
                         Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
                     } else {
-                        UserAccount user = new UserAccount(input, email, password);
+                        UserAccount user = new UserAccount(input, email, password, index, gender);
                         DocumentReference userRef = usersCollection.document(email);
 
                         userRef.set(user)
                                 .addOnSuccessListener(aVoid -> {
                                     Log.d(TAG, "DocumentSnapshot added with ID: " + userRef.getId());
                                     Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
+                                    intent.putExtra("email", email);
                                     startActivity(intent);
                                     finish();
                                 })
@@ -84,30 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             });
-//            UserAccount user = new UserAccount(input, email, password);
-//            DocumentReference userRef = db.collection("users").document(email);
-//
-//            userRef.set(user);
-//            db.collection("users")
-//                    .add(user)
-//                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                        @Override
-//                        public void onSuccess(DocumentReference documentReference) {
-//                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.w(TAG, "Error adding document", e);
-//                        }
-//                    });
-
-
-//            Intent intent = new Intent(this, ChoosePlayerActivity.class);
-//            startActivity(intent);
-//            finish();
-
     }
 
     public void login(View v) {

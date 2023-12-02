@@ -5,14 +5,33 @@ public class UserAccount {
     private String email;
     private String username;
     private String password;
+    public Integer currentIndex;
+    public String gender;
 
     public UserAccount() {
     }
-
-    public UserAccount(String username, String email, String password) {
+    public UserAccount(String username, String email, String password, Integer currentIndex, String gender) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.currentIndex = currentIndex;
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(Integer currentIndex) {
+        this.currentIndex = currentIndex;
     }
 
     public String getEmail() {
