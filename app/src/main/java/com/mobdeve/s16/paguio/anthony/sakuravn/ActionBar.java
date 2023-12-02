@@ -1,8 +1,10 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,19 +13,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ActionBar#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ActionBar extends Fragment {
     private ImageButton homeBtn;
     private ImageButton dialogueBtn;
     private ImageButton fastBtn;
     private ImageButton autoBtn;
 
+    private OnPauseGameListener onPauseGameListener;
+
+    GameView gameView;
+
+    GameThread gameThread;
+
     public ActionBar() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            // Set the listener when the fragment is attached to the activity
+            onPauseGameListener = (OnPauseGameListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnPauseGameListener");
+        }
     }
 
 
@@ -58,4 +73,15 @@ public class ActionBar extends Fragment {
 
         return view;
     }
+
+    public interface OnPauseGameListener {
+        void onPauseGame();
+    }
+
+    private void pauseGame() {
+        if (onPauseGameListener != null) {
+            onPauseGameListener.onPauseGame();
+        }
+    }
+
 }

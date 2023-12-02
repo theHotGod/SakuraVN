@@ -28,6 +28,17 @@ public class GameThread extends Thread {
                 if (canvas != null) {
                     synchronized (surfaceHolder) {
                         gameView.onDraw(canvas);
+                        // q: why is there an error here?
+                        // a: because the onDraw method is not yet implemented in GameView.java
+                        // q: how do i implement the onDraw method?
+                        // a: see GameView.java
+
+                        // q: what is the difference of the onDraw method and draw?
+                        // a: onDraw is a method that is called by the system to draw the view
+                        //    draw is a method that is called by the programmer to draw the view
+                        // q: so why do i need to call draw and not onDraw?
+                        // a: because onDraw is called by the system, and we want to call it ourselves
+                        //    so we call draw instead
                     }
                 }
             }
@@ -54,6 +65,7 @@ public class GameThread extends Thread {
     public void setIsRunning(boolean state) {
         isRunning = state;
     }
+
 
 
 

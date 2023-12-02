@@ -47,6 +47,7 @@ public class GameLayout extends RelativeLayout {
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
         fragmentContainer.setId(View.generateViewId());
+        addView(gameView);
         addView(fragmentContainer, fragmentParams);
 
         View fragmentView = inflate(context, R.layout.actionbar_dialogue_fragment, fragmentContainer);

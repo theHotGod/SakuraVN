@@ -6,15 +6,17 @@ import java.util.ArrayList;
 
 public class GameEngine {
     // the game's dialogue and choices are stored here
-    private ArrayList<String> dialogues;
-    private ArrayList<String> choices;
+    final private ArrayList<String> dialogues;
+    final private ArrayList<String> choices;
 
     private int currentDialogue;
+    private boolean isInnerDialogue;
 
     public GameEngine() {
         this.dialogues = new ArrayList<String>();
         this.choices = new ArrayList<String>();
         this.currentDialogue = 0;
+        this.isInnerDialogue = false;
 
         // first set of dialogues
         dialogues.add("Ever since I had been assigned to tend to this garden, I've been talking to these cherry blossoms.");
@@ -73,6 +75,39 @@ public class GameEngine {
         }
     }
 
+    public void showInnerDialogue() {
+        isInnerDialogue = true;
+    }
+
+    public boolean isInnerDialogue() {
+        return isInnerDialogue;
+    }
+
+    public boolean shouldTransition() {
+        switch (currentDialogue) {
+            case 0:
+            case 1:
+            case 3:
+            case 12:
+                return true;
+            default: return false;
+        }
+    }
+
+    public boolean isSakura() {
+        switch (currentDialogue) {
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return true;
+            default: return false;
+        }
+    }
+
+
     public void makeChoice(int choice) {
         switch (currentDialogue) {
             // first set of dialogue choice. Choice wouldn't matter since it is not the ending yet.
@@ -102,34 +137,9 @@ public class GameEngine {
         }
     }
 
-    public void addDialogue(String dialogue) {
-        this.dialogues.add(dialogue);
-    }
-
-    public void addChoice(String choice) {
-        this.choices.add(choice);
-    }
-
     public String getDialogue() {
         return this.dialogues.get(this.currentDialogue);
     }
-
-    public String getChoice(int index) {
-        return this.choices.get(index);
-    }
-
-    public void nextDialogue() {
-        this.currentDialogue++;
-    }
-
-    public int getDialogueSize() {
-        return this.dialogues.size();
-    }
-
-    public int getChoiceSize() {
-        return this.choices.size();
-    }
-
     public void reset() {
         this.currentDialogue = 0;
     }
