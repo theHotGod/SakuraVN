@@ -10,6 +10,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table
     public static final String _ID = "_id";
     public static final String NAME = "name";
+    public static final String EMAIL = "email";
     public static final String INDEX = "index";
     // DB Info
     public static final String DB_NAME = "PLAYER_INFO.db";
@@ -20,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME + "(" +
                     _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME + " TEXT NOT NULL, " +
+                    EMAIL + " TEXT NOT NULL, " +
                     "`" + INDEX + "` INTEGER NOT NULL)";
 
     public DatabaseHelper(Context context) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 
 public class DBManager {
 
@@ -27,17 +28,19 @@ public class DBManager {
     }
 
     // Add a new record
-    public long addRecord(String name, int index) {
+    public long addRecord(String name, String email, int index) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.NAME, name);
+        contentValues.put(DatabaseHelper.EMAIL, email);
         contentValues.put(DatabaseHelper.INDEX, index);
         return database.insert(DatabaseHelper.TABLE_NAME, null, contentValues);
     }
 
     // Update an existing record
-    public int updateRecord(long id, String name, int index) {
+    public int updateRecord(long id, String name, String email, int index) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.NAME, name);
+        contentValues.put(DatabaseHelper.EMAIL, email);
         contentValues.put(DatabaseHelper.INDEX, index);
         return database.update(DatabaseHelper.TABLE_NAME, contentValues, DatabaseHelper._ID + "=" + id, null);
     }
@@ -49,7 +52,7 @@ public class DBManager {
 
     // Fetch a specific record by ID
     public Cursor fetchRecordById(long id) {
-        String[] columns = new String[]{DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.INDEX};
+        String[] columns = new String[]{DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.EMAIL, DatabaseHelper.INDEX};
         return database.query(DatabaseHelper.TABLE_NAME, columns, DatabaseHelper._ID + "=" + id, null, null, null, null);
     }
 }
