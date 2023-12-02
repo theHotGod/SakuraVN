@@ -59,17 +59,6 @@
                 android:textStyle="bold"
                 android:text="Username"/>
 
-            <TextView
-                android:id="@+id/UID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/input_box"
-                android:padding="3dp"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:text="UID"/>
-
         </LinearLayout>
 
     </LinearLayout>

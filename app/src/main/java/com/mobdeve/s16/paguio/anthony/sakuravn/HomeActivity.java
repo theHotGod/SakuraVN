@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView contGame;
+    private TextView contGame, uName;
     private TextView newGame;
     GameThread gameThread;
     public String email;
@@ -27,11 +28,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
-
+        uName = findViewById(R.id.uName);
         contGame = findViewById(R.id.contGame);
         CollectionReference usersCollection = db.collection("users");
-        Intent intent = new Intent();
-        email = intent.getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        uName.setText(email);
         contGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
