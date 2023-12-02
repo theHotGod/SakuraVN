@@ -18,7 +18,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public GameView(Context context) {
         super(context);
-        init(context);
+        init();
         gameEngine = GameManager.getInstance().getGameEngine();
     }
 
@@ -61,14 +61,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     gameThread.join();
                     retry = false;
                 }
-                catch(InterruptedException e) {}
+                catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
 
 
-    private void init(Context context) {
+    private void init() {
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
         setFocusable(true);

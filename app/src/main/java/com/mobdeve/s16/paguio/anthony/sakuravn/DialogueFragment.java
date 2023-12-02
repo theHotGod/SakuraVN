@@ -36,11 +36,7 @@ public class DialogueFragment extends Fragment {
         charIndex = 0;
         tvDialogue.setText(""); // Clear existing text
 
-        if (gameEngine.shouldTransition()) {
-            gameEngine.showInnerDialogue();
-        } else {
-            handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
-        }
+        handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
     }
 
     private Runnable typewriterRunnable = new Runnable() {
