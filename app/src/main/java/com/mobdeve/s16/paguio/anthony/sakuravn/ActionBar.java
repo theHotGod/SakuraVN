@@ -9,11 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ActionBar extends Fragment {
     private ImageButton homeBtn;
@@ -59,6 +64,26 @@ public class ActionBar extends Fragment {
         fastBtn = view.findViewById(R.id.fastBtn);
         autoBtn = view.findViewById(R.id.autoBtn);
         counter = 1;
+
+        fastBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.dialogueFragmentContainer);
+                Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentById(R.id.innerDialogueFragmentContainer);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(fragment1)
+                        .remove(fragment2)
+                        .commit();
+
+                choiceFragment ChoiceFragment = new choiceFragment();
+
+                FragmentManager m = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = m.beginTransaction();
+
+                ft.replace(R.id.choiceFragmentContainer, ChoiceFragment, "two");
+                ft.commit();
+            }
+        });
 
         dialogueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

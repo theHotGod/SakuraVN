@@ -2,6 +2,10 @@ package com.mobdeve.s16.paguio.anthony.sakuravn;
 
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.util.ArrayList;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -106,9 +110,6 @@ public class GameEngine {
         isCanvasLocked = false;
     }
 
-
-
-
     public void makeChoice(int choice) {
         switch (choice) {
             case 0:
@@ -127,4 +128,7 @@ public class GameEngine {
         this.currentDialogue = 0;
     }
 
+    public String getOption() {
+        return this.choice.get(this.currentDialogue++);
+    }
 }
