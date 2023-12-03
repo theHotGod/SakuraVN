@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,10 +29,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView contGame, uName, signout, exit;
     private TextView newGame;
-    private ImageView DP;
     GameThread gameThread;
     public String email;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,18 @@ public class HomeActivity extends AppCompatActivity {
         uName = findViewById(R.id.uName);
         signout = findViewById(R.id.logout);
         exit = findViewById(R.id.exit);
-        DP = findViewById(R.id.DP);
         contGame = findViewById(R.id.contGame);
         newGame = findViewById(R.id.newGame);
-        CollectionReference usersCollection = db.collection("users");
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if(user == null) {
+            Intent intent = new Intent (HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            uName.setText(user.getEmail());
+        }
+        //CollectionReference usersCollection = db.collection("users");
 //        email = getIntent().getStringExtra("email");
 
         //Get info on user's gender from DB
@@ -64,11 +76,10 @@ public class HomeActivity extends AppCompatActivity {
 //                } Log.d(TAG, "User does not exist!");
 //            }
 //        });
-
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAffinity();
+                //finishAffinity();
             }
         });
 
@@ -96,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

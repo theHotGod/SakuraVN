@@ -14,8 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,7 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerBtn;
     //Firebase Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private CollectionReference usersCollection = db.collection("users");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         confirmPassword = findViewById(R.id.confirmPassword);
 
+        mAuth = FirebaseAuth.getInstance();
+
         registerBtn.setOnClickListener(v -> register(v));
         tvLogin.setOnClickListener(v -> login(v));
     }
+
 
     public void register(View v) {
         String input = userInput.getText().toString();
@@ -50,7 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         String password = userPassword.getText().toString();
         String confirm = confirmPassword.getText().toString();
         int index = 0;
-        String gender = "none";
+        String gender = "none"; // To not make the gender field as null
+
 
         // Just to validate user input so empty fields won't enter the DB
         if (input.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
@@ -63,36 +74,68 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
-        // register the user via authentication
-        // add the user to the database
-            CollectionReference usersCollection = db.collection("users");
-            usersCollection.document(email).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    if (task.getResult().exists()) {
-                        Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
-                    } else {
-                        UserAccount user = new UserAccount(input, email, password, index, gender);
-                        DocumentReference userRef = usersCollection.document(email);
 
-                        userRef.set(user)
-                                .addOnSuccessListener(aVoid -> {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + userRef.getId());
-                                    Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
-                                    intent.putExtra("email", email);
-                                    startActivity(intent);
-                                    finish();
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.w(TAG, "Error adding document", e);
-                                    // Handle the failure, show a message, etc.
+        if(password.length() < 6) {
+            Toast.makeText(RegisterActivity.this, "Passwords should be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        UserAccount user = new UserAccount(input, email, password, index, gender);
+        usersCollection.document(email).set(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //user has been added
+                        Log.d(TAG, "User has been added to the DB");
+
+                        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "Created user on Auth");
+                                            Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
                                 });
                     }
-                }
-            });
+                });
+
+        // register the user via authentication
+        // add the user to the database
+//            usersCollection.document(email).get().addOnCompleteListener(task -> {
+//                if (task.isSuccessful()) {
+//                    if (task.getResult().exists()) {
+//                        Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        UserAccount user = new UserAccount(input, email, password, index, gender);
+//                        DocumentReference userRef = usersCollection.document(email);
+//
+//                        userRef.set(user)
+//                                .addOnSuccessListener(aVoid -> {
+//                                    Log.d(TAG, "DocumentSnapshot added with ID: " + userRef.getId());
+//                                    Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                })
+//                                .addOnFailureListener(e -> {
+//                                    Log.w(TAG, "Error adding document", e);
+//                                    // Handle the failure, show a message, etc.
+//                                });
+//                    }
+//                }
+//            });
     }
 
     public void login(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 }

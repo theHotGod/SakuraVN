@@ -12,10 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mobdeve.s16.paguio.anthony.sakuravn.models.PlayerMC;
 
 public class ChoosePlayerActivity extends AppCompatActivity {
 
@@ -23,10 +24,25 @@ public class ChoosePlayerActivity extends AppCompatActivity {
     ImageView femaleMC;
     Button confirmBtn;
     Button clearBtn;
+    private String userEmail;
     boolean isMaleMCChosen = false;
     boolean isFemaleMCChosen = false;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    PlayerMC playerMC;
+    FirebaseAuth mAuth;
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null) {
+            Intent intent = new Intent(ChoosePlayerActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            userEmail = currentUser.getEmail();
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +55,8 @@ public class ChoosePlayerActivity extends AppCompatActivity {
         clearBtn = (Button) findViewById(R.id.clearBtn);
 
         confirmBtn.setEnabled(false);
-
+        //Initiate FirebaseAuth
+        mAuth = FirebaseAuth.getInstance();
 
         // store the data of the chosen character in playerMC, then will be stored in the database
 
@@ -97,7 +114,6 @@ public class ChoosePlayerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isFemaleMCChosen || isMaleMCChosen) {
                     // Assuming you have the user's email from the registration process
-                    String userEmail = getIntent().getStringExtra("email");
 
                     // Update the user's gender in Firestore based on the chosen character
                     if (isFemaleMCChosen) {
@@ -120,7 +136,6 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                     Log.d(TAG, "User gender updated successfully");
                     // Proceed to MainActivity or perform any other actions
                     Intent intent = new Intent(ChoosePlayerActivity.this, HomeActivity.class);
-                    intent.putExtra("email", userEmail);
                     startActivity(intent);
                     finish();
                 })
