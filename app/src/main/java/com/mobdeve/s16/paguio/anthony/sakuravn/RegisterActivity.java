@@ -63,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
+        // register the user via authentication
+        // add the user to the database
             CollectionReference usersCollection = db.collection("users");
             usersCollection.document(email).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

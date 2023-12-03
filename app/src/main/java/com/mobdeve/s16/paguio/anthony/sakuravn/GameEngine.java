@@ -3,11 +3,15 @@ package com.mobdeve.s16.paguio.anthony.sakuravn;
 import android.util.Log;
 
 import java.util.ArrayList;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class GameEngine {
     // the game's dialogue and choices are stored here
     final private ArrayList<String> dialogues;
     final private ArrayList<String> choice;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference userCollection = db.collection("users");
 
     private int currentDialogue;
     private boolean isCanvasLocked;
