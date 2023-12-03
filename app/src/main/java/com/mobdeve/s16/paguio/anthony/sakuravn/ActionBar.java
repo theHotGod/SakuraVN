@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ public class ActionBar extends Fragment {
     GameView gameView;
 
     GameThread gameThread;
+    Integer counter;
 
     public ActionBar() {
         // Required empty public constructor
@@ -55,6 +58,29 @@ public class ActionBar extends Fragment {
         dialogueBtn = view.findViewById(R.id.dialogueBtn);
         fastBtn = view.findViewById(R.id.fastBtn);
         autoBtn = view.findViewById(R.id.autoBtn);
+        counter = 1;
+
+        dialogueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (counter == 1) {
+                    counter = 0;
+                    BackreadFragment backreadFragment = new BackreadFragment();
+
+                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ft = manager.beginTransaction();
+
+                    ft.replace(R.id.backreadFragmentContainer, backreadFragment, "one");
+                    ft.commit();
+                }
+                else {
+                    counter = 1;
+                    closeFragment();
+                }
+
+            }
+
+        });
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +101,19 @@ public class ActionBar extends Fragment {
     private void pauseGame() {
         if (onPauseGameListener != null) {
             onPauseGameListener.onPauseGame();
+        }
+    }
+
+    private void closeFragment() {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("one");
+
+        if (fragment != null) {
+            FragmentTransaction ft = manager.beginTransaction();
+
+            ft.remove(fragment);
+
+            ft.commit();
         }
     }
 
