@@ -1,5 +1,6 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,15 +8,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class DialogueFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DialogueFragment extends Fragment{
     private GameEngine gameEngine;
     private TextView tvDialogue;
     private LinearLayout txtBox;
@@ -23,6 +31,8 @@ public class DialogueFragment extends Fragment {
 
     private Handler handler;
     private int charIndex;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +47,7 @@ public class DialogueFragment extends Fragment {
         updateDialogueWithTypewriterEffect();
         return view;
     }
+
 
     private void updateDialogueWithTypewriterEffect() {
         charIndex = 0;
@@ -77,6 +88,7 @@ public class DialogueFragment extends Fragment {
         if (tvDialogue != null && gameEngine != null) {
             updateDialogueWithTypewriterEffect();
         }
+
     }
     public void showInnerDialogueFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -93,6 +105,17 @@ public class DialogueFragment extends Fragment {
         if (innerDialogueFragment != null) {
             innerDialogueFragment.hideCurrentDialogueBox();
         }
+    }
+
+    public void auto(){
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gameEngine.next();
+                updateDialogue();
+                auto();
+            }
+        }, 3000);
     }
 
 }

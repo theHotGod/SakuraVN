@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActionBar extends Fragment {
     private ImageButton homeBtn;
@@ -31,7 +32,11 @@ public class ActionBar extends Fragment {
     GameView gameView;
 
     GameThread gameThread;
+    GameEngine gameEngine;
     Integer counter;
+
+    public boolean isAuto = false;
+    public Handler handler = new Handler();
 
     public ActionBar() {
         // Required empty public constructor
@@ -64,6 +69,20 @@ public class ActionBar extends Fragment {
         fastBtn = view.findViewById(R.id.fastBtn);
         autoBtn = view.findViewById(R.id.autoBtn);
         counter = 1;
+
+        autoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAuto){
+                    stop();
+                    Log.d("counter", String.valueOf(isAuto));
+                }
+                else{
+                    autoPlay();
+                    Log.d("counter", String.valueOf(isAuto));
+                }
+            }
+        });
 
         fastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,4 +161,18 @@ public class ActionBar extends Fragment {
         }
     }
 
+    private void autoPlay(){
+        isAuto = true;
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        DialogueFragment dialogueFragment = (DialogueFragment) manager.findFragmentById(R.id.dialogueFragmentContainer);
+
+        if (dialogueFragment != null) {
+            dialogueFragment.auto();
+        }
+    }
+
+    private void stop(){
+        isAuto = false;
+        handler.removeCallbacksAndMessages(null);
+    }
 }
