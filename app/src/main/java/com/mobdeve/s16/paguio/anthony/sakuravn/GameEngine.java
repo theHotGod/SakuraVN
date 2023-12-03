@@ -7,16 +7,16 @@ import java.util.ArrayList;
 public class GameEngine {
     // the game's dialogue and choices are stored here
     final private ArrayList<String> dialogues;
-    final private ArrayList<String> choices;
+    final private ArrayList<String> choice;
 
     private int currentDialogue;
-    private boolean isInnerDialogue;
+    private boolean isCanvasLocked;
 
     public GameEngine() {
         this.dialogues = new ArrayList<String>();
-        this.choices = new ArrayList<String>();
+        this.choice = new ArrayList<String>();
         this.currentDialogue = 0;
-        this.isInnerDialogue = false;
+        this.isCanvasLocked = false;
 
         // first set of dialogues
         dialogues.add("Ever since I had been assigned to tend to this garden, I've been talking to these cherry blossoms.");
@@ -34,18 +34,16 @@ public class GameEngine {
         dialogues.add("No. This can't be true. This is all fake.");
         dialogues.add("I know what you're saying. Besides, I'm just a mirror who's eventually going to mirror out your expressions in life.");
 
-        choices.add("(Overreact) How can that be? And, how can you be so sure of all of this?!?");
-        choices.add("(Calm but still frightened) Okay, but how does this all work? And why do people need to know this? They are going to be freaked out as I am right now.");
+        dialogues.add("How can that be? And, how can you be so sure of all of this?!?");
 
         // second set of dialogues
         dialogues.add("I told you about the senses and how sometimes they fail to live up your expectations, correct? Stay calm. I know this is a lot to take in, but you'll soon understand.");
         dialogues.add("I'm going to need an example for me to understand this at any moment now.");
         dialogues.add("I can still feel what you're feeling at the moment. Here, let me just explain it this way. Remember what Seneca said about we often suffer in imagination more than in reality? Or the fact that Einstein said that imagination is more important than knowledge?");
 
-        choices.add("Yes. I remember those quotes.");
-        choices.add("No. I don't remember those quotes.");
+        dialogues.add("Yes. I remember those quotes. After all, I love philosophy.");
 
-        // third set of dialogues
+        // third set of dialogues 19
         dialogues.add("I'm glad you do. Now, let me ask you this. What do you think they mean by that?");
         dialogues.add("I don't know. But if I were to guess, we shouldn't belittle our imagination?");
         dialogues.add("That's a good guess. But I think it's more than that. I think it's about how we should trust our imagination more than our senses. Because our senses can be deceiving.");
@@ -59,9 +57,9 @@ public class GameEngine {
 
         // ENDING CHOICE 1
         // GOOD ENDING:
-        choices.add("Yes. Even if it still hard for me to grasp, I will continue on this journey to find out more about this principle.");
+        choice.add("Yes. Even if it still hard for me to grasp, I will continue on this journey to find out more about this principle.");
         // BAD ENDING:
-        choices.add("No. Believe me when I say that it would've happened anyway. It's pure coincidence.");
+        choice.add("No. Believe me when I say that it would've happened anyway. It's pure coincidence.");
 
 
     }
@@ -70,70 +68,51 @@ public class GameEngine {
         currentDialogue++;
         Log.e("currentDialogue", String.valueOf(currentDialogue));
 
-        if (currentDialogue >= dialogues.size()) {
-            // mark that the game is finished
+        if (currentDialogue == dialogues.size()) {
+            isCanvasLocked = true;
         }
     }
 
-    public void showInnerDialogue() {
-        isInnerDialogue = true;
-    }
-
-    public boolean isInnerDialogue() {
-        return isInnerDialogue;
-    }
 
     public boolean shouldTransition() {
         switch (currentDialogue) {
-            case 0:
-            case 1:
-            case 3:
-            case 12:
-                return true;
-            default: return false;
-        }
-    }
-
-    public boolean isSakura() {
-        switch (currentDialogue) {
             case 4:
             case 5:
-            case 6:
             case 7:
-            case 8:
             case 9:
+            case 11:
+            case 13:
+            case 15:
+            case 17:
+            case 19:
+            case 21:
+            case 22:
+            case 23:
+            case 25:
+            case 28:
                 return true;
             default: return false;
         }
     }
+    public boolean isCanvasLocked() {
+        return isCanvasLocked;
+    }
+
+    public void unlockCanvas() {
+        isCanvasLocked = false;
+    }
+
+
 
 
     public void makeChoice(int choice) {
-        switch (currentDialogue) {
-            // first set of dialogue choice. Choice wouldn't matter since it is not the ending yet.
-            case 13:
-                if (choice == 0 || choice == 1) {
-                    // update the dialogue accordingly
-                    currentDialogue = 14;
-                }
+        switch (choice) {
+            case 0:
+                // GOOD ENDING
                 break;
-
-            case 16:
-                if (choice == 0 || choice == 1) {
-                    // update the dialogue accordingly
-                    currentDialogue = 17;
-                }
+            case 1:
+                // BAD ENDING
                 break;
-
-                // this will matter
-            case 26:
-                if (choice == 0) {
-                    // inform the game that the ending is good
-                }
-                else if (choice == 1) {
-                    // inform the game that the ending is bad
-                }
-
         }
     }
 

@@ -65,12 +65,6 @@ public class ActionBar extends Fragment {
             }
         });
 
-        // Log the ImageButton references
-        Log.d("ActionBar", "homeBtn: " + homeBtn);
-        Log.d("ActionBar", "dialogueBtn: " + dialogueBtn);
-        Log.d("ActionBar", "fastBtn: " + fastBtn);
-        Log.d("ActionBar", "autoBtn: " + autoBtn);
-
         return view;
     }
 

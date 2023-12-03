@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import androidx.fragment.app.FragmentTransaction;
 public class DialogueFragment extends Fragment {
     private GameEngine gameEngine;
     private TextView tvDialogue;
+    private LinearLayout txtBox;
+    private ImageView MC;
 
     private Handler handler;
     private int charIndex;
@@ -25,6 +29,8 @@ public class DialogueFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialogue, container, false);
         tvDialogue = view.findViewById(R.id.contentTxt);
+        txtBox = view.findViewById(R.id.txtBox);
+        MC = view.findViewById(R.id.MC);
         gameEngine = GameManager.getInstance().getGameEngine();
         handler = new Handler(Looper.getMainLooper());
         charIndex = 0;
@@ -37,10 +43,18 @@ public class DialogueFragment extends Fragment {
         tvDialogue.setText(""); // Clear existing text
 
         if (gameEngine.shouldTransition()) {
-            gameEngine.showInnerDialogue();
-        } else {
-            handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
+            txtBox.setVisibility(View.GONE);
+            MC.setVisibility(View.GONE);
+            showInnerDialogueFragment();
         }
+        else {
+            txtBox.setVisibility(View.VISIBLE);
+            MC.setVisibility(View.VISIBLE);
+            hideInnerDialogueFragment();
+            handler.postDelayed(typewriterRunnable, 50);
+        }
+
+        // Delay between characters (adjust as needed)
     }
 
     private Runnable typewriterRunnable = new Runnable() {
@@ -68,7 +82,17 @@ public class DialogueFragment extends Fragment {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         InnerDialogueFragment innerDialogueFragment = (InnerDialogueFragment) fragmentManager.findFragmentById(R.id.innerDialogueFragmentContainer);
         if (innerDialogueFragment != null) {
-            innerDialogueFragment.getView().setVisibility(View.VISIBLE);
+            innerDialogueFragment.showCurrentDialogueBox();
+            innerDialogueFragment.updateDialogue();
         }
     }
+
+    public void hideInnerDialogueFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        InnerDialogueFragment innerDialogueFragment = (InnerDialogueFragment) fragmentManager.findFragmentById(R.id.innerDialogueFragmentContainer);
+        if (innerDialogueFragment != null) {
+            innerDialogueFragment.hideCurrentDialogueBox();
+        }
+    }
+
 }
