@@ -79,7 +79,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             // Display a Toast when the screen is touched
             Toast.makeText(getContext(), "SurfaceView is working!", Toast.LENGTH_SHORT).show();
-            gameEngine.next();
+            if (!gameEngine.isCanvasLocked()) {
+                gameEngine.next();
+                DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
+                if (dialogueFragment != null) {
+                    dialogueFragment.updateDialogue();
+                }
+            } else {
+                Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
+            }
 
         }
         return true;

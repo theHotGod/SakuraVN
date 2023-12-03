@@ -9,18 +9,15 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InnerDialogueFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class InnerDialogueFragment extends Fragment {
     GameEngine gameEngine;
     private TextView contentTxt;
     private Handler handler;
     private int charIndex;
+    private LinearLayout txtBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,19 +25,43 @@ public class InnerDialogueFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inner_dialogue, container, false);
         contentTxt = view.findViewById(R.id.contentTxt);
+        txtBox = view.findViewById(R.id.txtBox);
         gameEngine = GameManager.getInstance().getGameEngine();
         handler = new Handler(Looper.getMainLooper());
         charIndex = 0;
+
+
         updateDialogueWithTypewriterEffect();
         return view;
     }
 
     public void updateDialogueWithTypewriterEffect() {
         charIndex = 0;
-        contentTxt.setText(""); // Clear existing text
-        handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
+        if (contentTxt != null) {
+            contentTxt.setText(""); // Clear existing text
+            handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
+        }
     }
 
+    public void hideCurrentDialogueBox() {
+        // Hide txtBox when calling from DialogueFragment
+        if (txtBox != null) {
+            txtBox.setVisibility(View.GONE);
+        }
+    }
+
+    public void showCurrentDialogueBox() {
+        // Show txtBox when calling from DialogueFragment
+        if (txtBox != null) {
+            txtBox.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void updateDialogue() {
+        if (contentTxt != null && gameEngine != null) {
+            updateDialogueWithTypewriterEffect();
+        }
+    }
     private Runnable typewriterRunnable = new Runnable() {
         @Override
         public void run() {
