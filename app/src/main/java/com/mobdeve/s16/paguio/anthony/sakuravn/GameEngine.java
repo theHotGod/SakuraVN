@@ -47,13 +47,18 @@ public class GameEngine {
 
 
     public void next(int currentIndex) {
-        if (currentIndex >= 0 && currentIndex < dialogues.size()) {
+        if (currentIndex >= 0 && currentIndex <= dialogues.size()) {
             currentDialogue = currentIndex;
 
-        } else {
-            Log.e("GameEngine", "Invalid dialogue index");
-            isCanvasLocked = true;
         }
+    }
+
+    // check if the current dialogue is the last dialogue
+    public boolean checkIfLastDialogue(int currentIndex) {
+        if (currentIndex == dialogues.size()) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -137,6 +142,10 @@ public class GameEngine {
 
     public void setDialogue(int index) {
         this.currentDialogue = index;
+    }
+
+    public void setCanvasLocked(boolean isCanvasLocked) {
+        this.isCanvasLocked = isCanvasLocked;
     }
 
 

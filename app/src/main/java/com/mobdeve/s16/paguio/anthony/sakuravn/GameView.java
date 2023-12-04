@@ -99,8 +99,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     if (!gameEngine.isCanvasLocked()) {
 
                         gameEngine.next(index);
-                        index++; // increment the index
-                        userCollection.document(email).update("currentIndex", index);
+                        if (gameEngine.checkIfLastDialogue(index)) {
+                            gameEngine.setCanvasLocked(true);
+                            index -= 1;
+                            userCollection.document(email).update("currentIndex", index);
+                        }
+                        else {
+                            index++; // increment the index
+                            userCollection.document(email).update("currentIndex", index);
+                        }
+
 
                         if (dialogueFragment != null) {
                             dialogueFragment.getView().setVisibility(VISIBLE);
