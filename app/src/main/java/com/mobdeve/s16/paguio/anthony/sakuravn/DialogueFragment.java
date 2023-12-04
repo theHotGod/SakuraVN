@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,8 +35,6 @@ public class DialogueFragment extends Fragment{
     String email = currentUser.getCurrentUser().getEmail();
     CollectionReference userCollection = db.collection("users");
     int index;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,16 +82,20 @@ public class DialogueFragment extends Fragment{
         charIndex = 0;
         tvDialogue.setText(""); // Clear existing text
 
-        if (gameEngine.shouldTransition()) {
+        if (gameEngine.shouldTransition() && !gameEngine.isCanvasLocked()) {
             txtBox.setVisibility(View.GONE);
             MC.setVisibility(View.GONE);
             showInnerDialogueFragment();
         }
-        else {
+        else if (!gameEngine.shouldTransition() && !gameEngine.isCanvasLocked()) {
             txtBox.setVisibility(View.VISIBLE);
             MC.setVisibility(View.VISIBLE);
             hideInnerDialogueFragment();
             handler.postDelayed(typewriterRunnable, 50);
+        }
+        else {
+            showChoicesFragment();
+            Log.e("DialogueFragment", "Canvas is locked");
         }
 
     }
@@ -105,7 +108,7 @@ public class DialogueFragment extends Fragment{
                 tvDialogue.append(String.valueOf(gameEngine.getDialogue().charAt(charIndex++)));
 
                 // Schedule the next character after the delay
-                handler.postDelayed(this, 50); // Delay between characters (adjust as needed)
+                handler.postDelayed(this, 100); // Delay between characters (adjust as needed)
             } else {
                 // Typewriter effect finished
                 charIndex = 0; // Reset for the next update
@@ -135,16 +138,49 @@ public class DialogueFragment extends Fragment{
             innerDialogueFragment.hideCurrentDialogueBox();
         }
     }
+    public void hideCurrentDialogueBox() {
+        // Hide txtBox when calling from DialogueFragment
+        if (txtBox != null) {
+            txtBox.setVisibility(View.GONE);
+        }
+    }
+
+    public void showChoicesFragment() {
+        Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.dialogueFragmentContainer);
+        Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentById(R.id.innerDialogueFragmentContainer);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .remove(fragment1)
+                .remove(fragment2)
+                .commit();
+
+        choiceFragment ChoiceFragment = new choiceFragment();
+
+        FragmentManager m = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = m.beginTransaction();
+
+        ft.replace(R.id.choiceFragmentContainer, ChoiceFragment, "two");
+        ft.commit();
+    }
 
     public void auto(){
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                gameEngine.next(index);
-                updateDialogue();
-                auto();
+                userCollection.document(email).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        index = task.getResult().getLong("currentIndex").intValue();
+                        // if the current index is not locked, then go to the next dialogue
+                        if (!gameEngine.isCanvasLocked()) {
+                            gameEngine.next(index);
+                            index++; // increment the index
+                            userCollection.document(email).update("currentIndex", index);
+                            updateDialogue();
+                            auto();
+                        }
+                    }
+                });
             }
-        }, 3000);
+        }, 4500);
     }
 
 }

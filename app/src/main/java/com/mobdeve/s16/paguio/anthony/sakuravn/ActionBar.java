@@ -18,6 +18,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +41,10 @@ public class ActionBar extends Fragment {
 
     public boolean isAuto = false;
     public Handler handler = new Handler();
+    FirebaseAuth currentUser = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference userCollection = db.collection("users");
+    private int index;
 
     public ActionBar() {
         // Required empty public constructor
@@ -70,6 +78,14 @@ public class ActionBar extends Fragment {
         autoBtn = view.findViewById(R.id.autoBtn);
         counter = 1;
 
+        // get index from firestore
+        String email = currentUser.getCurrentUser().getEmail();
+        userCollection.document(email).get().addOnSuccessListener(documentSnapshot -> {
+            if(documentSnapshot.exists()){
+                index = documentSnapshot.getLong("currentIndex").intValue();
+            }
+        });
+
         autoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +117,10 @@ public class ActionBar extends Fragment {
 
                 ft.replace(R.id.choiceFragmentContainer, ChoiceFragment, "two");
                 ft.commit();
+
+                // sets the maximum index of the game
+                index = 28;
+                userCollection.document(email).update("currentIndex", index);
             }
         });
 

@@ -103,6 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                             dialogueFragment.updateDialogue();
                         }
                     } else {
+                        // if the current index is locked, then display a toast
                         Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
                     }
                 }

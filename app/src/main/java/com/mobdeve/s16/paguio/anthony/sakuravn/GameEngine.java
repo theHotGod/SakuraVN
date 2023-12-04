@@ -1,5 +1,7 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -50,6 +52,7 @@ public class GameEngine {
 
         } else {
             Log.e("GameEngine", "Invalid dialogue index");
+            isCanvasLocked = true;
         }
     }
 
@@ -99,6 +102,8 @@ public class GameEngine {
         choice.add("No. Believe me when I say that it would've happened anyway. It's pure coincidence.");
     }
 
+    // function for ending the game
+
     public boolean shouldTransition() {
         switch (currentDialogue) {
             case 4:
@@ -119,6 +124,7 @@ public class GameEngine {
             default: return false;
         }
     }
+
     public boolean isCanvasLocked() {
         return isCanvasLocked;
     }
@@ -134,9 +140,6 @@ public class GameEngine {
     }
 
 
-    public void reset() {
-        this.currentDialogue = 0;
-    }
 
     public String getOption() {
         return this.choice.get(this.currentDialogue++);
