@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -16,16 +18,43 @@ public class GameEngine {
     final private ArrayList<String> choice;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userCollection = db.collection("users");
+    private FirebaseAuth currentUser = FirebaseAuth.getInstance();
 
     private int currentDialogue;
     private boolean isCanvasLocked;
+    private int index;
 
     public GameEngine() {
         this.dialogues = new ArrayList<String>();
         this.choice = new ArrayList<String>();
-        this.currentDialogue = 0;
         this.isCanvasLocked = false;
+        // get the this.currentDialogue from the firestore database to reflect the current progress of the user
+        String email = currentUser.getCurrentUser().getEmail();
+        userCollection.document(email).get().addOnSuccessListener(documentSnapshot -> {
+            if(documentSnapshot.exists()){
+                index = documentSnapshot.getLong("currentIndex").intValue();
+                setDialogue(index);
+            }
+        });
 
+        initializeDialoguesAndChoices();
+
+
+
+    }
+
+
+    public void next(int currentIndex) {
+        if (currentIndex >= 0 && currentIndex < dialogues.size()) {
+            currentDialogue = currentIndex;
+
+        } else {
+            Log.e("GameEngine", "Invalid dialogue index");
+        }
+    }
+
+
+    private void initializeDialoguesAndChoices() {
         // first set of dialogues
         dialogues.add("Ever since I had been assigned to tend to this garden, I've been talking to these cherry blossoms.");
         dialogues.add("It's been fun these past couple of weeks, but I've come to a realization that people may look at me stupid. I think it's time for me to ask why this is so.");
@@ -68,19 +97,7 @@ public class GameEngine {
         choice.add("Yes. Even if it still hard for me to grasp, I will continue on this journey to find out more about this principle.");
         // BAD ENDING:
         choice.add("No. Believe me when I say that it would've happened anyway. It's pure coincidence.");
-
-
     }
-
-    public void next() {
-        currentDialogue++;
-        Log.e("currentDialogue", String.valueOf(currentDialogue));
-
-        if (currentDialogue == dialogues.size()) {
-            isCanvasLocked = true;
-        }
-    }
-
 
     public boolean shouldTransition() {
         switch (currentDialogue) {
@@ -106,24 +123,17 @@ public class GameEngine {
         return isCanvasLocked;
     }
 
-    public void unlockCanvas() {
-        isCanvasLocked = false;
-    }
-
-    public void makeChoice(int choice) {
-        switch (choice) {
-            case 0:
-                // GOOD ENDING
-                break;
-            case 1:
-                // BAD ENDING
-                break;
-        }
-    }
-
     public String getDialogue() {
         return this.dialogues.get(this.currentDialogue);
     }
+
+
+
+    public void setDialogue(int index) {
+        this.currentDialogue = index;
+    }
+
+
     public void reset() {
         this.currentDialogue = 0;
     }

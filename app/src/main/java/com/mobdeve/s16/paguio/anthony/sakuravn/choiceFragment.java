@@ -40,6 +40,7 @@ public class choiceFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GoodEnding.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -48,6 +49,7 @@ public class choiceFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BadEnding.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

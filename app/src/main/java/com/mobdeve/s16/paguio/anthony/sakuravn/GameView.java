@@ -11,15 +11,24 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     // making the whole screen of the game clickable and responsive
     private GameThread gameThread;
     private GameEngine gameEngine;
+    FirebaseAuth currentUser;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference userCollection = db.collection("users");
+    int index = 0;
 
     public GameView(Context context) {
         super(context);
         init(context);
         gameEngine = GameManager.getInstance().getGameEngine();
+        currentUser = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -77,18 +86,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // Display a Toast when the screen is touched
-            Toast.makeText(getContext(), "SurfaceView is working!", Toast.LENGTH_SHORT).show();
-            if (!gameEngine.isCanvasLocked()) {
-                gameEngine.next();
-                DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
-                if (dialogueFragment != null) {
-                    dialogueFragment.updateDialogue();
-                }
-            } else {
-                Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
-            }
+            String email = currentUser.getCurrentUser().getEmail();
+            // get field of currentIndex in the database
+            userCollection.document(email).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    index = task.getResult().getLong("currentIndex").intValue();
+                    // if the current index is not locked, then go to the next dialogue
+                    if (!gameEngine.isCanvasLocked()) {
+                        gameEngine.next(index);
+                        index++; // increment the index
+                        userCollection.document(email).update("currentIndex", index);
 
+                        DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
+                        if (dialogueFragment != null) {
+                            dialogueFragment.getView().setVisibility(VISIBLE);
+                            dialogueFragment.updateDialogue();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
         return true;
     }

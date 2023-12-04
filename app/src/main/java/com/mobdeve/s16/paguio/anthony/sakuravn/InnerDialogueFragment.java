@@ -39,7 +39,7 @@ public class InnerDialogueFragment extends Fragment {
         charIndex = 0;
         if (contentTxt != null) {
             contentTxt.setText(""); // Clear existing text
-            handler.postDelayed(typewriterRunnable, 50); // Delay between characters (adjust as needed)
+            handler.postDelayed(typewriterRunnable, 70); // Delay between characters (adjust as needed)
         }
     }
 
@@ -70,7 +70,7 @@ public class InnerDialogueFragment extends Fragment {
                 contentTxt.append(String.valueOf(gameEngine.getDialogue().charAt(charIndex++)));
 
                 // Schedule the next character after the delay
-                handler.postDelayed(this, 50); // Delay between characters (adjust as needed)
+                handler.postDelayed(this, 70); // Delay between characters (adjust as needed)
             } else {
                 // Typewriter effect finished
                 charIndex = 0; // Reset for the next update
