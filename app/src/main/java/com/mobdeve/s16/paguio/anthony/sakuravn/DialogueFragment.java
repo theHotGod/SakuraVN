@@ -172,10 +172,18 @@ public class DialogueFragment extends Fragment{
                         // if the current index is not locked, then go to the next dialogue
                         if (!gameEngine.isCanvasLocked()) {
                             gameEngine.next(index);
-                            index++; // increment the index
-                            userCollection.document(email).update("currentIndex", index);
-                            updateDialogue();
-                            auto();
+                            if (gameEngine.checkIfLastDialogue(index)) {
+                                gameEngine.setCanvasLocked(true);
+                                index -= 1;
+                                userCollection.document(email).update("currentIndex", index);
+                            }
+                            else {
+                                index++; // increment the index
+                                userCollection.document(email).update("currentIndex", index);
+                                updateDialogue();
+                                auto();
+                            }
+
                         }
                     }
                 });

@@ -8,9 +8,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
-import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -19,10 +17,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     // making the whole screen of the game clickable and responsive
     private GameThread gameThread;
-    private GameEngine gameEngine;
+    private final GameEngine gameEngine;
     FirebaseAuth currentUser;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference userCollection = db.collection("users");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference userCollection = db.collection("users");
     int index = 0;
 
     public GameView(Context context) {
@@ -107,7 +105,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         else {
                             index++; // increment the index
                             userCollection.document(email).update("currentIndex", index);
-                        }if (dialogueFragment != null) {
+                        }
+
+                        if (dialogueFragment != null) {
                             dialogueFragment.getView().setVisibility(VISIBLE);
                             dialogueFragment.updateDialogue();
                         }

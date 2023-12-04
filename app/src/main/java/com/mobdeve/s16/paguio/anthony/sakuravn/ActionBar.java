@@ -14,22 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActionBar extends Fragment {
-    private ImageButton homeBtn;
-    private ImageButton dialogueBtn;
-    private ImageButton fastBtn;
-    private ImageButton autoBtn;
 
     private OnPauseGameListener onPauseGameListener;
 
@@ -41,9 +33,9 @@ public class ActionBar extends Fragment {
 
     public boolean isAuto = false;
     public Handler handler = new Handler();
-    FirebaseAuth currentUser = FirebaseAuth.getInstance();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference userCollection = db.collection("users");
+    private final FirebaseAuth currentUser = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference userCollection = db.collection("users");
     private int index;
 
     public ActionBar() {
@@ -72,10 +64,10 @@ public class ActionBar extends Fragment {
         Log.d("ActionBar", "Inflated view: " + view);
 
         // Retrieve ImageButton references
-        homeBtn = view.findViewById(R.id.homeBtn);
-        dialogueBtn = view.findViewById(R.id.dialogueBtn);
-        fastBtn = view.findViewById(R.id.fastBtn);
-        autoBtn = view.findViewById(R.id.autoBtn);
+        ImageButton homeBtn = view.findViewById(R.id.homeBtn);
+        ImageButton dialogueBtn = view.findViewById(R.id.dialogueBtn);
+        ImageButton fastBtn = view.findViewById(R.id.fastBtn);
+        ImageButton autoBtn = view.findViewById(R.id.autoBtn);
         counter = 1;
 
         // get index from firestore
@@ -118,7 +110,7 @@ public class ActionBar extends Fragment {
 
                 // sets the maximum index of the game
                 index = 29;
-                userCollection.document(email).update("currentIndex", index);
+                userCollection.document(email).update("currentIndex", index - 1);
             }
         });
 
