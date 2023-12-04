@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -63,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         String gender = "none"; // To not make the gender field as null
 
 
-        // Just to validate user input so empty fields won't enter the DB
+        // Just to validate user input so empty/null fields won't enter the DB
         if (input.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -80,57 +81,36 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         UserAccount user = new UserAccount(input, email, password, index, gender);
-        usersCollection.document(email).set(user)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        //user has been added
-                        Log.d(TAG, "User has been added to the DB");
-
-                        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d(TAG, "Created user on Auth");
-                                            Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Created user on Auth");
+                            currentUser = mAuth.getCurrentUser();
+                            usersCollection.document(currentUser.getEmail()).set(user)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d(TAG, "User has been added to the DB");
                                         }
-                                    }
-                                });
-                    }
-                });
+                                    }); // end of userCollection.doc.....
+                            Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
 
-        // register the user via authentication
-        // add the user to the database
-//            usersCollection.document(email).get().addOnCompleteListener(task -> {
-//                if (task.isSuccessful()) {
-//                    if (task.getResult().exists()) {
-//                        Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        UserAccount user = new UserAccount(input, email, password, index, gender);
-//                        DocumentReference userRef = usersCollection.document(email);
-//
-//                        userRef.set(user)
-//                                .addOnSuccessListener(aVoid -> {
-//                                    Log.d(TAG, "DocumentSnapshot added with ID: " + userRef.getId());
-//                                    Intent intent = new Intent(RegisterActivity.this, ChoosePlayerActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                })
-//                                .addOnFailureListener(e -> {
-//                                    Log.w(TAG, "Error adding document", e);
-//                                    // Handle the failure, show a message, etc.
-//                                });
-//                    }
-//                }
-//            });
+                            if (task.getException() != null && task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(RegisterActivity.this, "Email already exists. Try a different email.", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }); //end of mAuth
     }
 
     public void login(View v) {

@@ -53,33 +53,10 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             uName.setText(user.getEmail());
         }
-        //CollectionReference usersCollection = db.collection("users");
-//        email = getIntent().getStringExtra("email");
-
-        //Get info on user's gender from DB
-//        usersCollection.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if(document.exists()) {
-//                        String gender = document.getString("gender");
-//
-//                        if(gender.equals("male")) {
-//                            DP.setImageResource(R.drawable.malemc);
-//                        }
-//                        else if(gender.equals("female")) {
-//                            DP.setImageResource(R.drawable.femc);
-//                        }
-//                        uName.setText(document.getString("username"));
-//                    }
-//                } Log.d(TAG, "User does not exist!");
-//            }
-//        });
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finishAffinity();
+                finish();
             }
         });
 
