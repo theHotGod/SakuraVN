@@ -23,6 +23,7 @@ public class GoodEnding extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GoodEnding.this, HomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
