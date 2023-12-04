@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     TextView tvRegister;
-    // what do i declare here before i find by id the plain text
     TextView userInput;
     TextView userPassword;
     Button loginBtn;
@@ -98,8 +99,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    // TODO: create function for login button
     public void login(View v) {
 
         String email = userInput.getText().toString();
@@ -139,45 +138,16 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    }); // end of DB authentication
+                } else {
+                    //Authentication failed
+                    Toast
+                    .makeText(LoginActivity.this,
+                        "Wrong email or password.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
-//        usersCollection.document(email).get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                if (task.getResult().exists()) {
-//                    // Email exists, check if the password matches
-//                    UserAccount user = task.getResult().toObject(UserAccount.class);
-//                    if (user != null && user.getPassword().equals(password)) {
-//                        // Password matches, login successful
-//                        if (user.getGender().equals("male") || user.getGender().equals("female")) {
-//                            //If the user has picked a gender
-//                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                            intent.putExtra("email", email);
-//                            startActivity(intent);
-//                            finish();
-//                        } else if (user.getGender().equals("none")) {
-//                            //If the user closes during the gender selection
-//                            Intent intent = new Intent (LoginActivity.this, ChoosePlayerActivity.class);
-//                            intent.putExtra("email", email);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//
-//                    } else {
-//                        // Password does not match
-//                        Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    // Email does not exist
-//                    Toast.makeText(LoginActivity.this, "Account does not exist", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Log.w(TAG, "Error checking document existence", task.getException());
-//                // Handle the error, show a message, etc.
-//            }
-//        });
-
     }
 
     public void register(View v) {
@@ -185,16 +155,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    // TODO: create a visual novel game
-    // q: what are the essentials of a visual novel game?
-    // a: 1. story
-    // a: 2. choices
-    // a: 3. endings
-    // a: 4. save/load
-    // a: 5. settings
-    // a: 6. achievements
-    // a: 7. gallery
-
-
 }

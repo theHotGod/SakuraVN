@@ -92,7 +92,6 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 isFemaleMCChosen = true;
             }
         });
-        // q: what if i want the toast to appear if the user tries to pick another character?
 
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,8 +112,6 @@ public class ChoosePlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isFemaleMCChosen || isMaleMCChosen) {
-                    // Assuming you have the user's email from the registration process
-
                     // Update the user's gender in Firestore based on the chosen character
                     if (isFemaleMCChosen) {
                         updateUserGender(userEmail, "female");

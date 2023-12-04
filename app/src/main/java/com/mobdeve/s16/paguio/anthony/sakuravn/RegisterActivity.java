@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         String gender = "none"; // To not make the gender field as null
 
 
-        // Just to validate user input so empty fields won't enter the DB
+        // Just to validate user input so empty/null fields won't enter the DB
         if (input.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
