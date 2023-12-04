@@ -132,7 +132,7 @@ public class ChoosePlayerActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "User gender updated successfully");
                     // Proceed to MainActivity or perform any other actions
-                    Intent intent = new Intent(ChoosePlayerActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(ChoosePlayerActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 })
