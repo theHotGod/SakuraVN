@@ -108,7 +108,7 @@ public class DialogueFragment extends Fragment{
                 tvDialogue.append(String.valueOf(gameEngine.getDialogue().charAt(charIndex++)));
 
                 // Schedule the next character after the delay
-                handler.postDelayed(this, 100); // Delay between characters (adjust as needed)
+                handler.postDelayed(this, 17); // Delay between characters (adjust as needed)
             } else {
                 // Typewriter effect finished
                 charIndex = 0; // Reset for the next update
@@ -181,6 +181,7 @@ public class DialogueFragment extends Fragment{
                 });
             }
         }, 4500);
+
     }
 
 }

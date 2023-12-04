@@ -101,8 +101,25 @@ public class ActionBar extends Fragment {
         });
 
         fastBtn.setOnClickListener(new View.OnClickListener() {
+            private boolean isAutoPlayActive = false;
+
             @Override
             public void onClick(View v) {
+                // Check if auto play is active
+                if (isAutoPlayActive) {
+                    // Stop auto play
+                    stopAutoPlay();
+                } else {
+                    // Start auto play
+                    startAutoPlay();
+                }
+            }
+
+            private void startAutoPlay() {
+                // Set flag to indicate auto play is active
+                isAutoPlayActive = true;
+
+                // Your existing code to remove fragments and set index
                 Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.dialogueFragmentContainer);
                 Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentById(R.id.innerDialogueFragmentContainer);
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -121,8 +138,35 @@ public class ActionBar extends Fragment {
                 // sets the maximum index of the game
                 index = 28;
                 userCollection.document(email).update("currentIndex", index);
+
+                // Start auto play in the DialogueFragment
+                startAutoPlayInDialogueFragment();
+            }
+
+            private void stopAutoPlay() {
+                // Set flag to indicate auto play is stopped
+                isAutoPlayActive = false;
+
+                // Your existing code to stop auto play in the DialogueFragment
+                stopAutoPlayInDialogueFragment();
+            }
+
+            private void startAutoPlayInDialogueFragment() {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                DialogueFragment dialogueFragment = (DialogueFragment) manager.findFragmentById(R.id.dialogueFragmentContainer);
+
+                if (dialogueFragment != null) {
+                    dialogueFragment.auto();
+                }
+            }
+
+            private void stopAutoPlayInDialogueFragment() {
+                // Modify your existing code to stop auto play in the DialogueFragment
+                handler.removeCallbacksAndMessages(null);
             }
         });
+
+
 
         dialogueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
