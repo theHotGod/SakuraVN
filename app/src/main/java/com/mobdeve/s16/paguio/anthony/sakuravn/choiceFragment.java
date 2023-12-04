@@ -35,6 +35,8 @@ public class choiceFragment extends Fragment {
         option1.setText(gameEngine.getOption());
         option2.setText(gameEngine.getOption());
 
+        view.setVisibility(View.GONE);
+
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

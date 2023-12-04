@@ -43,4 +43,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnPause
         DialogueFragment dialogueFragment = (DialogueFragment) fragmentManager.findFragmentById(R.id.dialogueFragmentContainer);
         return dialogueFragment;
     }
+
+    public InnerDialogueFragment getInnerDialogueFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        InnerDialogueFragment innerDialogueFragment = (InnerDialogueFragment) fragmentManager.findFragmentById(R.id.innerDialogueFragmentContainer);
+        return innerDialogueFragment;
+    }
+
+    public choiceFragment getChoiceFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        choiceFragment choiceFragment = (choiceFragment) fragmentManager.findFragmentById(R.id.choiceFragmentContainer);
+        return choiceFragment;
+    }
 }

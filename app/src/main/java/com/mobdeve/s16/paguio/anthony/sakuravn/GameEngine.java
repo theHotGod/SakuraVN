@@ -129,6 +129,17 @@ public class GameEngine {
         return isCanvasLocked;
     }
 
+    public boolean checkIfLastDialogue(int currentIndex) {
+        if (currentIndex == dialogues.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setCanvasLocked(boolean isCanvasLocked) {
+        this.isCanvasLocked = isCanvasLocked;
+    }
+
     public String getDialogue() {
         return this.dialogues.get(this.currentDialogue);
     }

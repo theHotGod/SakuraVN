@@ -55,16 +55,19 @@ public class GameLayout extends RelativeLayout {
         FrameLayout actionBarContainer = fragmentView.findViewById(R.id.actionBarContainer);
         FrameLayout dialogueFragmentContainer = fragmentView.findViewById(R.id.dialogueFragmentContainer);
         FrameLayout innerDialogueFragmentContainer = fragmentView.findViewById(R.id.innerDialogueFragmentContainer);
+        FrameLayout choiceFragmentContainer = fragmentView.findViewById(R.id.choiceFragmentContainer);
 
 // creating the actionbar and dialogue fragment
         ActionBar actionBar = new ActionBar();
         DialogueFragment dialogueFragment = new DialogueFragment();
         InnerDialogueFragment innerDialogueFragment = new InnerDialogueFragment();
+        choiceFragment choicesFragment = new choiceFragment();
         FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(actionBarContainer.getId(), actionBar)
                 .replace(dialogueFragmentContainer.getId(), dialogueFragment)
-                .replace(innerDialogueFragmentContainer.getId(), innerDialogueFragment);
+                .replace(innerDialogueFragmentContainer.getId(), innerDialogueFragment)
+                .replace(choiceFragmentContainer.getId(), choicesFragment);
         fragmentTransaction.commit();
     }
 
