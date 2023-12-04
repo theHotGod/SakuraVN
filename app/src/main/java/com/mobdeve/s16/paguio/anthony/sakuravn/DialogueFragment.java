@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -94,7 +95,6 @@ public class DialogueFragment extends Fragment{
             handler.postDelayed(typewriterRunnable, 50);
         }
         else {
-            showChoicesFragment();
             Log.e("DialogueFragment", "Canvas is locked");
         }
 
@@ -145,25 +145,12 @@ public class DialogueFragment extends Fragment{
         }
     }
 
-    public void showChoicesFragment() {
-        Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.dialogueFragmentContainer);
-        Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentById(R.id.innerDialogueFragmentContainer);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .remove(fragment1)
-                .remove(fragment2)
-                .commit();
-
-        choiceFragment ChoiceFragment = new choiceFragment();
-
-        FragmentManager m = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = m.beginTransaction();
-
-        ft.replace(R.id.choiceFragmentContainer, ChoiceFragment, "two");
-        ft.commit();
-    }
 
     public void auto(){
         handler.postDelayed(new Runnable() {
+            DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
+            choiceFragment choicesFragment = ((MainActivity) getContext()).getChoiceFragment();
+            InnerDialogueFragment innerDialogueFragment = ((MainActivity) getContext()).getInnerDialogueFragment();
             @Override
             public void run() {
                 userCollection.document(email).get().addOnCompleteListener(task -> {
@@ -184,6 +171,17 @@ public class DialogueFragment extends Fragment{
                                 auto();
                             }
 
+                        }
+                        else {
+                            // if the current index is locked, then display a toast
+                            Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
+
+                            dialogueFragment.getView().setVisibility(View.GONE);
+                            innerDialogueFragment.getView().setVisibility(View.GONE);
+
+                            if (choicesFragment != null) {
+                                choicesFragment.getView().setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 });

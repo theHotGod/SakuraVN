@@ -86,6 +86,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
         choiceFragment choicesFragment = ((MainActivity) getContext()).getChoiceFragment();
+        InnerDialogueFragment innerDialogueFragment = ((MainActivity) getContext()).getInnerDialogueFragment();
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             String email = currentUser.getCurrentUser().getEmail();
@@ -114,6 +115,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     } else {
                         // if the current index is locked, then display a toast
                         Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
+                        dialogueFragment.getView().setVisibility(View.GONE);
+                        innerDialogueFragment.getView().setVisibility(View.GONE);
 
                         if (choicesFragment != null) {
                             choicesFragment.getView().setVisibility(View.VISIBLE);
