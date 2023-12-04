@@ -122,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
                             Toast.makeText(HomeActivity.this, "Starting a new game", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(HomeActivity.this, ChoosePlayerActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     } // end of if task.isSuccessful
                 });
