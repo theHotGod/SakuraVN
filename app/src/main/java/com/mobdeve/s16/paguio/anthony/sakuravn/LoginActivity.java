@@ -32,9 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     TextView userInput;
     TextView userPassword;
     Button loginBtn;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference usersCollection = db.collection("users");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference usersCollection = db.collection("users");
     private FirebaseAuth mAuth;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 
     @Override
     public void onStart() {

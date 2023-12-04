@@ -13,17 +13,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -32,8 +29,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView contGame, uName, signout, exit;
     private TextView newGame;
-    GameThread gameThread;
-    public String email;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference userCollection = db.collection("users");
     FirebaseAuth auth;
@@ -102,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
                                                                 Toast.makeText(HomeActivity.this, "Starting a new game", Toast.LENGTH_SHORT).show();
                                                                 Intent intent = new Intent (HomeActivity.this, ChoosePlayerActivity.class);
                                                                 startActivity(intent);
+                                                                finish();
                                                             } else {
                                                                 Log.w(TAG, "Error updating user data", task.getException());
                                                             }
@@ -120,6 +116,7 @@ public class HomeActivity extends AppCompatActivity {
                             Toast.makeText(HomeActivity.this, "Starting a new game", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(HomeActivity.this, ChoosePlayerActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     } // end of if task.isSuccessful
                 });
