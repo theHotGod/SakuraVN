@@ -25,10 +25,6 @@ public class ActionBar extends Fragment {
 
     private OnPauseGameListener onPauseGameListener;
 
-    GameView gameView;
-
-    GameThread gameThread;
-    GameEngine gameEngine;
     Integer counter;
 
     public boolean isAuto = false;

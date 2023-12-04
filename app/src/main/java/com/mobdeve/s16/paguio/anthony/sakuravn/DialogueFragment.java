@@ -30,7 +30,7 @@ public class DialogueFragment extends Fragment{
     private int charIndex;
     private String gender;
     private String username;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth currentUser = FirebaseAuth.getInstance();
     String email = currentUser.getCurrentUser().getEmail();
     CollectionReference userCollection = db.collection("users");

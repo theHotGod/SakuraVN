@@ -1,20 +1,10 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,8 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 public class GameLayout extends RelativeLayout {
 
     private GameView gameView;
-    private ImageView imageView;
-    SurfaceHolder surfaceHolder;
     GameEngine gameEngine;
 
     public GameLayout(Context context) {

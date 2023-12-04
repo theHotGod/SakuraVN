@@ -1,12 +1,7 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
-import static android.app.PendingIntent.getActivity;
 
 import android.util.Log;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -18,9 +13,9 @@ public class GameEngine {
     // the game's dialogue and choices are stored here
     final private ArrayList<String> dialogues;
     final private ArrayList<String> choice;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference userCollection = db.collection("users");
-    private FirebaseAuth currentUser = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference userCollection = db.collection("users");
+    private final FirebaseAuth currentUser = FirebaseAuth.getInstance();
 
     private int currentDialogue;
     private boolean isCanvasLocked;

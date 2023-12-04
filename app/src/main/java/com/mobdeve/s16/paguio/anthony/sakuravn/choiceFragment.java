@@ -5,17 +5,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class choiceFragment extends Fragment {
-
-    private Button option1, option2;
-    private View view;
 
     public choiceFragment() {
         // Required empty public constructor
@@ -27,10 +22,10 @@ public class choiceFragment extends Fragment {
 
         GameEngine gameEngine = new GameEngine();
 
-        view = inflater.inflate(R.layout.fragment_choice, container, false);
+        View view = inflater.inflate(R.layout.fragment_choice, container, false);
 
-        option1 = view.findViewById(R.id.option1);
-        option2 = view.findViewById(R.id.option2);
+        Button option1 = view.findViewById(R.id.option1);
+        Button option2 = view.findViewById(R.id.option2);
 
         option1.setText(gameEngine.getOption());
         option2.setText(gameEngine.getOption());
