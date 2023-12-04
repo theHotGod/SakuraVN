@@ -99,6 +99,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
     public void login(View v) {
 
         String email = userInput.getText().toString();

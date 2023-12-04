@@ -74,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                     // Start the MainActivity to continue the game
                     Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -102,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                                                                 Toast.makeText(HomeActivity.this, "Starting a new game", Toast.LENGTH_SHORT).show();
                                                                 Intent intent = new Intent (HomeActivity.this, ChoosePlayerActivity.class);
                                                                 startActivity(intent);
+                                                                finish();
                                                             } else {
                                                                 Log.w(TAG, "Error updating user data", task.getException());
                                                             }
@@ -120,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
                             Toast.makeText(HomeActivity.this, "Starting a new game", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(HomeActivity.this, ChoosePlayerActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     } // end of if task.isSuccessful
                 });
