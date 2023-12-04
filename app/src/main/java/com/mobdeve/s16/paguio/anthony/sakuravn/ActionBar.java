@@ -1,5 +1,6 @@
 package com.mobdeve.s16.paguio.anthony.sakuravn;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,72 +102,26 @@ public class ActionBar extends Fragment {
         });
 
         fastBtn.setOnClickListener(new View.OnClickListener() {
-            private boolean isAutoPlayActive = false;
-
             @Override
             public void onClick(View v) {
-                // Check if auto play is active
-                if (isAutoPlayActive) {
-                    // Stop auto play
-                    stopAutoPlay();
-                } else {
-                    // Start auto play
-                    startAutoPlay();
-                }
-            }
+                choiceFragment choicesFragment = ((MainActivity) getContext()).getChoiceFragment();
+                DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
+                InnerDialogueFragment innerDialogueFragment = ((MainActivity) getContext()).getInnerDialogueFragment();
 
-            private void startAutoPlay() {
-                // Set flag to indicate auto play is active
-                isAutoPlayActive = true;
+                // set the visibility of the choice fragment to gone
+                choicesFragment.getView().setVisibility(View.VISIBLE);
 
-                // Your existing code to remove fragments and set index
-                Fragment fragment1 = getActivity().getSupportFragmentManager().findFragmentById(R.id.dialogueFragmentContainer);
-                Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentById(R.id.innerDialogueFragmentContainer);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .remove(fragment1)
-                        .remove(fragment2)
-                        .commit();
+                // set the visibility of the dialogue fragment to gone
+                dialogueFragment.getView().setVisibility(View.GONE);
 
-                choiceFragment ChoiceFragment = new choiceFragment();
-
-                FragmentManager m = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = m.beginTransaction();
-
-                ft.replace(R.id.choiceFragmentContainer, ChoiceFragment, "two");
-                ft.commit();
+                // set the visibility of the inner dialogue fragment to gone
+                innerDialogueFragment.getView().setVisibility(View.GONE);
 
                 // sets the maximum index of the game
-                index = 28;
+                index = 29;
                 userCollection.document(email).update("currentIndex", index);
-
-                // Start auto play in the DialogueFragment
-                startAutoPlayInDialogueFragment();
-            }
-
-            private void stopAutoPlay() {
-                // Set flag to indicate auto play is stopped
-                isAutoPlayActive = false;
-
-                // Your existing code to stop auto play in the DialogueFragment
-                stopAutoPlayInDialogueFragment();
-            }
-
-            private void startAutoPlayInDialogueFragment() {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                DialogueFragment dialogueFragment = (DialogueFragment) manager.findFragmentById(R.id.dialogueFragmentContainer);
-
-                if (dialogueFragment != null) {
-                    dialogueFragment.auto();
-                }
-            }
-
-            private void stopAutoPlayInDialogueFragment() {
-                // Modify your existing code to stop auto play in the DialogueFragment
-                handler.removeCallbacksAndMessages(null);
             }
         });
-
-
 
         dialogueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

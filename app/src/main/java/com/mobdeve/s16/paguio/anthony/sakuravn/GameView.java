@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.ImageView;
@@ -85,6 +86,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
+        choiceFragment choicesFragment = ((MainActivity) getContext()).getChoiceFragment();
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             String email = currentUser.getCurrentUser().getEmail();
             // get field of currentIndex in the database
@@ -93,11 +97,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     index = task.getResult().getLong("currentIndex").intValue();
                     // if the current index is not locked, then go to the next dialogue
                     if (!gameEngine.isCanvasLocked()) {
+
                         gameEngine.next(index);
                         index++; // increment the index
                         userCollection.document(email).update("currentIndex", index);
 
-                        DialogueFragment dialogueFragment = ((MainActivity) getContext()).getDialogueFragment();
                         if (dialogueFragment != null) {
                             dialogueFragment.getView().setVisibility(VISIBLE);
                             dialogueFragment.updateDialogue();
@@ -105,6 +109,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     } else {
                         // if the current index is locked, then display a toast
                         Toast.makeText(getContext(), "Canvas is locked. Make a choice!", Toast.LENGTH_SHORT).show();
+
+                        if (choicesFragment != null) {
+                            choicesFragment.getView().setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             });

@@ -16,6 +16,7 @@ public class choiceFragment extends Fragment {
 
     private Button option1, option2;
     private View view;
+    private GameEngine gameEngine;
 
     public choiceFragment() {
         // Required empty public constructor
@@ -25,15 +26,20 @@ public class choiceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        GameEngine gameEngine = new GameEngine();
+        gameEngine = GameManager.getInstance().getGameEngine();
 
         view = inflater.inflate(R.layout.fragment_choice, container, false);
+
 
         option1 = view.findViewById(R.id.option1);
         option2 = view.findViewById(R.id.option2);
 
         option1.setText(gameEngine.getOption());
         option2.setText(gameEngine.getOption());
+
+        view.setVisibility(View.GONE);
+
+
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override

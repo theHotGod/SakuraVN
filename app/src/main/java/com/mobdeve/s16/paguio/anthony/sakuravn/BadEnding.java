@@ -23,6 +23,7 @@ public class BadEnding extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(BadEnding.this, HomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
